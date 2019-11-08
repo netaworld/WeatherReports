@@ -48,6 +48,30 @@
       // var queryURL = "https://api.openweathermap.org/data/2.5/weather?" +
       //  "q=Bujumbura,Burundi&units=imperial&appid=" + APIKey;
 
+      var wicon = {
+    '01d': 'wi-day-sunny',
+    '02d': 'wi-day-cloudy',
+    '03d': 'wi-cloud',
+    '04d': 'wi-cloudy',
+    '09d': 'wi-showers',
+    '10d': 'wi-day-rain-mix',
+    '11d': 'wi-thunderstorm',
+    '13d': 'wi-snow',
+    '50d': 'wi-fog',
+    '01n': 'wi-night-clear',
+    '02n': 'wi-night-alt-cloudy',
+    '03n': 'wi-night-alt-cloudy-high',
+    '04n': 'wi-cloudy',
+    '09n': 'wi-night-alt-sprinkle',
+    '10n': 'wi-night-alt-showers',
+    '11n': 'wi-night-alt-thunderstorm',
+    '13n': 'wi-night-alt-snow',
+    '50n': 'wi-night-fog'
+  };
+
+
+
+
       $("#searchButton").on("click", function(event) {
         event.preventDefault();
         // In this case, the "this" keyword refers to the button that was clicked
@@ -86,12 +110,16 @@
 
             // Converts the temp to Kelvin with the below formula
             var tempF = (response.main.temp - 273.15) * 1.8 + 32;
-            $(".tempF").text("Temperature (F) " + tempF);
+            // $(".tempF").text("Temperature (F) " + Math.floor(tempF));
 
             //we need city card
             var card = $("<div>");
             //inside we need city
             var city = $("<h1>");
+            //img tag for icon <img id="wicon" src="" alt="Weather icon">
+            var icon = $("<img>")
+            icon.attr("src", "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png")
+
             city.text(response.name + " Weather Details");
             // wind
             var wind = $("<p>");
@@ -102,10 +130,10 @@
         
             //temp
             var temp = $("<p>");
-            temp.text("Temperature (F) " + tempF);
+            temp.text("Temperature (F) " + Math.floor(tempF));
 
             //we need append stats to card
-            card.append(city, wind, humidity, temp);
+            card.append(city, wind, humidity, temp, icon);
 
             $("#results").append(card);
 
